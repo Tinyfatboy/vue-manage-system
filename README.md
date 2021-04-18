@@ -1,4 +1,4 @@
-# vue-manage-system
+## vue-manage-system
 
 ## 基于vue的通用航空综合管理系统
 
@@ -6,7 +6,7 @@
 
 ### 项目需要nodejs环境，需要npm或者yarn包管理器
 
-### 下载nodejs:  https://nodejs.org/zh-cn/download/
+#### 下载nodejs:  https://nodejs.org/zh-cn/download/
 
 ```
 打开cmd或者git bash，克隆项目
@@ -35,4 +35,5 @@ via yarn => yarn build
 在项目文件夹中会生成dist文件夹，在生产模式代理dist中的index.html即可访问 (需自行解决跨域问题)
 ```
 
-### 注：由于接口中的图片资源不存在，项目中的图片全部暂用本地文件代替，后续待接口完善
+#### 注1：此系统是模拟后台登录，登陆后会保存信息到localStorage，保存用户信息一天。一天后用户需要重新登录，模拟token过期的情况
+#### 注2：由于接口中的图片资源不存在，项目中的图片全部暂用本地文件代替，后续待接口完善
