@@ -1,80 +1,68 @@
 <template>
-  <el-row :gutter="54">
+  <el-row :gutter="60" v-loading="loading">
     <el-col :span="12">
       <img
         :src="require('../../public/img/detail.png')"
         alt=""
+        style="width: 100%;"
       >
     </el-col>
     <el-col :span="12">
-      <span class="detail-title">{{ detailData.serverUnitServicesTitle }}</span>
+      <span class="detail-title">{{ detailData.serverTitle }}</span>
       <el-form
         label-position="left"
         label-width="100px"
+        :model="detailForm"
       >
-        <el-form-item
-          label="机 型："
-          prop="usersAccountAccount"
-        >
+        <el-form-item label="机 型：">
           <el-radio-group
             size="small"
-            v-model="detailData.serverAircraftModel[0]"
+            v-model="detailForm.serverAircraft"
           >
             <el-radio-button
-              v-for="(item, index) in serverAircraftModel"
+              v-for="(item, index) in detailData.serverAircraft"
               :key="index"
               :label="item"
             ></el-radio-button>
           </el-radio-group>
         </el-form-item>
-        <el-form-item
-          label="催化剂："
-          prop="usersAccountPassword"
-        >
+        <el-form-item label="催化剂：">
           <el-radio-group
             size="small"
-            v-model="detailData.serverCatalyzer[0]"
+            v-model="detailForm.serverCatalyzer"
           >
             <el-radio-button
-              v-for="(item, index) in serverCatalyzer"
+              v-for="(item, index) in detailData.serverCatalyzer"
               :key="index"
               :label="item"
             ></el-radio-button>
           </el-radio-group>
         </el-form-item>
-        <el-form-item
-          label="剂 量："
-          prop="usersAccountEmail"
-        >
+        <el-form-item label="剂 量：">
           <el-input
             size="small"
-            v-model="detailData"
+            class="count-input"
+            v-model="detailForm.serverWeight"
           ></el-input>
+          <span style="margin-left: 5px;"> KG </span>
         </el-form-item>
-        <el-form-item
-          label="预定时间："
-          prop="usersEssentialInformationName"
-        >
+        <el-form-item label="预定时间：">
           <el-date-picker
-            v-model="value1"
+            v-model="detailForm.serverDate"
             type="date"
+            size="small"
             placeholder="选择日期"
           >
           </el-date-picker>
         </el-form-item>
-        <el-form-item
-          label=""
-          prop="usersEssentialInformationIdNumber"
-        >
+        <el-form-item label="">
         </el-form-item>
         <el-form-item>
-          <el-button> 咨询 </el-button>
+          <el-button size="small" @click="handleAdvice"> 咨询 </el-button>
         </el-form-item>
-        <el-form-item
-          label="详情："
-          prop="usersEssentialInformationCompany"
-        >
-          <span style="white-space: pre-line;">{{ detailData.serverUnitServicesDetail }}</span>
+        <el-form-item label="详情：">
+          <span
+            style="white-space: pre-line;">{{ detailData.serverDetail }}</span>
         </el-form-item>
       </el-form>
     </el-col>
@@ -82,17 +70,28 @@
 </template>
 
 <script>
+import mixin from '@/utils/mixin.js'
 import axiosHttp from '../utils/create-api.js'
 
 export default {
-  name: 'airTourDetail',
+  mixins: [mixin],
   data () {
     return {
-      detailData: {},
+      detailData: {
+        serverCatalyzer: [],
+        serverAircraft: []
+      },
+      detailForm: {
+        serverAircraft: '',
+        serverCatalyzer: '',
+        serverWeight: '',
+        serverDate: ''
+      },
       loading: false
     }
   },
   created () {
+    this.loading = true
     const { serverId = '' } = this.$route.query || {}
     if (serverId === '') {
       return
@@ -111,14 +110,15 @@ export default {
           const {
             serverUnitServicesTitle = '',
             serverUnitServicesDetail = '',
-            serverUnitServicesImg = ''
+            serverUnitServicesImg = '',
+            serverUnitServicesPhone = ''
           } = services
           const {
             serverUnitServicesArtificialRainfallAircraftModel = '',
             serverUnitServicesArtificialRainfallCatalyzer = ''
           } = iServerUnitService
 
-          const serverAircraftModel = serverUnitServicesArtificialRainfallAircraftModel.split(
+          const serverAircraft = serverUnitServicesArtificialRainfallAircraftModel.split(
             '、'
           )
           const serverCatalyzer = serverUnitServicesArtificialRainfallCatalyzer.split(
@@ -126,11 +126,12 @@ export default {
           )
 
           this.detailData = {
-            serverUnitServicesTitle,
-            serverUnitServicesDetail,
-            serverUnitServicesImg,
-            serverAircraftModel,
-            serverCatalyzer
+            serverAircraft,
+            serverCatalyzer,
+            serverPhone: serverUnitServicesPhone,
+            serverTitle: serverUnitServicesTitle,
+            serverDetail: serverUnitServicesDetail,
+            serverImg: serverUnitServicesImg
           }
         }
       })
@@ -156,23 +157,17 @@ export default {
 </script>
 
 <style scoped>
-.el-header {
-  margin: 40px;
-  padding: 0px;
-}
-.el-main {
-  padding: 40px;
-  padding-top: 0px;
-}
-.el-main img {
-  width: 100%;
-  object-fit: cover;
-}
-.el-form {
-  font-size: 14px;
-}
 .detail-title {
   font-size: 24px;
   font-weight: bold;
+}
+.count-input {
+  width: 90px;
+}
+.el-form {
+  margin-top: 20px;
+}
+.el-form-item {
+  margin-bottom: 12px;
 }
 </style>

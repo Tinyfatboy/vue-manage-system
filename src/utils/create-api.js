@@ -21,6 +21,26 @@ export default {
     )
   },
 
+  modifyEmail (params) {
+    return axios.post(
+      '/user/update/email',
+      {},
+      {
+        params
+      }
+    )
+  },
+
+  modifyPassword (params) {
+    return axios.post(
+      '/user/update/pw',
+      {},
+      {
+        params
+      }
+    )
+  },
+
   getServiceList (params) {
     return axios.get('/user/get/server/home', {
       params

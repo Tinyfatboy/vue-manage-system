@@ -1,5 +1,5 @@
 <template>
-  <div class="main">
+  <div class="main" v-loading="loading">
     <div class="slider">
       <el-carousel
         trigger="click"
@@ -67,11 +67,13 @@ export default {
     }
   },
   created () {
+    this.loading = true
     const params = { limit: 6 }
 
     axiosHttp
       .getServiceList(params)
       .then(res => {
+        this.loading = false
         const { code = null, data = {} } = (res && res.data) || {}
 
         if (code === 200) {

@@ -1,5 +1,5 @@
 <template>
-  <div class="main">
+  <div class="main" v-loading="loading">
     <content-Item
       :title="title"
       :list="list"
@@ -25,18 +25,22 @@ export default {
     }
   },
   created () {
+    this.loading = true
     const params = { type: this.title }
 
     axiosHttp
       .getServiceType(params)
       .then(res => {
+        this.loading = false
         const { code = null, data = [] } = (res && res.data) || {}
 
         if (code === 200) {
           this.list = this.handleData(data)
         }
       })
-      .catch(() => {})
+      .catch(() => {
+        this.loading = false
+      })
   },
   methods: {
     handleData (list) {

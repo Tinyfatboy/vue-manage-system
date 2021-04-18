@@ -6,6 +6,7 @@
         :gutter="20"
         v-for="(element, key) in formattedList"
         :key="key"
+        style="margin-bottom: 20px;"
       >
         <el-col
           :span="6"

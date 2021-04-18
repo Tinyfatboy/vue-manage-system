@@ -110,10 +110,10 @@ export default {
       this.$router.push('/register')
     },
     submitForm () {
-      this.loading = true
-
       this.$refs.loginForm.validate(valid => {
         if (valid) {
+          this.loading = true
+
           const { usersAccountAccount, usersAccountPassword } = this.loginForm
 
           axiosHttp
@@ -130,10 +130,7 @@ export default {
               if (code === 200) {
                 const date = new Date().getTime()
                 const userInfo = { date, user: data }
-                localStorage.setItem(
-                  'userInfo',
-                  JSON.stringify(userInfo)
-                )
+                localStorage.setItem('userInfo', JSON.stringify(userInfo))
                 this.$store.commit(types.LOGIN, data)
 
                 this.$notify({
@@ -141,9 +138,9 @@ export default {
                   message: '登录成功，正在跳转到主页...',
                   type: 'success'
                 })
-                setTimeout(() => {
-                  this.$router.push('/')
-                }, 2000)
+                this.$nextTick(() => {
+                  this.$router.push('/home')
+                })
               } else {
                 this.$notify({
                   title: '登录失败',
@@ -180,7 +177,7 @@ export default {
 .el-form > h2 {
   width: 100%;
   text-align: center;
-  margin-bottom: 30px;
+  margin-bottom: 40px;
 }
 .login-btn {
   width: 140px;

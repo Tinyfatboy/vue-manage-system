@@ -13,19 +13,24 @@
               <el-button @click="goTo('helicopterRental')">直升机出租</el-button>
             </el-button-group>
           </el-col>
-          <el-col :span="8">
-            <div class="search-area">
-              <el-input
-                placeholder="请输入内容"
-                class="input-with-select"
-                size="small"
-              >
-                <el-button
-                  slot="append"
-                  icon="el-icon-search"
-                ></el-button>
-              </el-input>
-            </div>
+          <el-col :span="6">
+            <el-input
+              placeholder="请输入内容"
+              class="input-with-select"
+              size="small"
+            >
+              <el-button
+                slot="append"
+                icon="el-icon-search"
+              ></el-button>
+            </el-input>
+          </el-col>
+          <el-col :span="6">
+            <user-info
+              class="user-info"
+              @modifyPassword="showPassword = true"
+              @modifyEmail="showEmail = true"
+            ></user-info>
           </el-col>
         </el-row>
       </el-header>
@@ -33,36 +38,51 @@
         <component :is="currentComponent"></component>
       </el-main>
     </el-container>
+    <modify-email-modal :show.sync="showEmail">
+    </modify-email-modal>
+    <modify-password-modal :show.sync="showPassword">
+    </modify-password-modal>
   </div>
 </template>
 
 <script>
+import userInfo from '@/components/userInfo.vue'
 import frontPage from '@/views/FrontPage.vue'
 import airTour from '@/views/AirTour.vue'
 import artificialRainfall from '@/views/ArtificialRainfall.vue'
 import charteredAirplane from '@/views/CharteredAirplane.vue'
 import helicopterRental from '@/views/HelicopterRental.vue'
 import parachuteFlight from '@/views/ParachuteFlight.vue'
+import modifyEmailModal from '@/components/modifyEmailModal.vue'
+import modifyPasswordModal from '@/components/modifyPasswordModal.vue'
 
 export default {
   name: 'home',
   components: {
+    userInfo,
     frontPage,
     airTour,
     artificialRainfall,
     charteredAirplane,
     helicopterRental,
-    parachuteFlight
+    parachuteFlight,
+    modifyEmailModal,
+    modifyPasswordModal
   },
   data () {
     return {
       currentComponent: '',
+      showEmail: false,
+      showPassword: false,
       loading: false
     }
   },
   computed: {
     isLogin () {
       return this.$store.state.isLogin
+    },
+    user () {
+      return this.$store.state.user
     }
   },
   created () {
@@ -98,23 +118,18 @@ export default {
 
 <style scoped>
 .el-header {
-  margin: 40px;
+  margin: 40px 40px 20px 40px;
   padding: 0px;
 }
-.search-area {
-  height: 40px;
-  max-width: 350px;
-  position: relative;
-  top: 4px;
+.el-input {
+  vertical-align: -9px;
+  max-width: 240px;
 }
 .el-main {
   padding: 40px;
   padding-top: 0px;
 }
-.el-carousel img {
-  width: 100%;
-}
-.el-card > img {
-  width: 100%;
+.user-info {
+  float: right;
 }
 </style>

@@ -124,7 +124,6 @@ export default {
     }
 
     const validatePassword = (rule, value, callback) => {
-      console.log(this.registerForm)
       if (this.registerForm.usersAccountPasswordRepeat !== '') {
         this.$refs.registerForm.validateField('usersAccountPasswordRepeat')
       }
@@ -227,10 +226,10 @@ export default {
   },
   methods: {
     submitForm () {
-      this.loading = true
-
       this.$refs.registerForm.validate(valid => {
         if (valid) {
+          this.loading = true
+
           const {
             usersAccountAccount,
             usersAccountPassword,
