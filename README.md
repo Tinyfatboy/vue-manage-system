@@ -1,24 +1,38 @@
 # vue-manage-system
 
+## 基于vue的通用航空综合管理系统
+
 ## Project setup
+
+### 项目需要nodejs环境，需要npm或者yarn包管理器
+
+### 下载nodejs:  https://nodejs.org/zh-cn/download/
+
 ```
-npm install
+打开cmd或者git bash，克隆项目
+git clone git@github.com:Tinyfatboy/vue-manage-system.git
+进入目录
+cd ./vue-manage-system
+使用npm或者yarn安装依赖
+via npm => npm install
+via yarn => yarn
 ```
 
-### Compiles and hot-reloads for development
+### 在开发模式运行项目
 ```
-npm run serve
-```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
+安装完成依赖后，运行命令
+via npm => npm run serve
+via yarn => yarn serve
+运行完成后，打开127.0.0.1:8080或者localhost:8080，查看项目
+开发模式配置了webpack的devServer，可以直接访问后台api
 ```
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+### 在生产模式运行项目
+```
+执行命令，生成生产环境下的静态文件
+via npm => npm run build
+via yarn => yarn build
+在项目文件夹中会生成dist文件夹，在生产模式代理dist中的index.html即可访问 (需自行解决跨域问题)
+```
+
+### 注：由于接口中的图片资源不存在，项目中的图片全部暂用本地文件代替，后续待接口完善
