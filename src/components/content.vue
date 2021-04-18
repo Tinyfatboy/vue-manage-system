@@ -18,7 +18,7 @@
             @click.native="goToDetail(item)"
           >
             <img
-              :src="require('../../public/img/item.png')"
+              :src="'http://119.29.20.213:8080/uploadimg/' + item.serverUnitServicesImg"
               class="image"
             >
             <div class="card-desc">
@@ -89,7 +89,8 @@ export default {
 }
 .el-card img {
   width: 100%;
-  object-fit: cover;
+  height: 150px;
+  object-fit: contain;
 }
 .card-desc {
   padding: 10px;
