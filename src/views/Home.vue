@@ -15,6 +15,7 @@
           </el-col>
           <el-col :span="6">
             <el-input
+              v-model="searchParam"
               placeholder="请输入内容"
               class="input-with-select"
               size="small"
@@ -22,6 +23,7 @@
               <el-button
                 slot="append"
                 icon="el-icon-search"
+                @click="doSearch"
               ></el-button>
             </el-input>
           </el-col>
@@ -35,7 +37,10 @@
         </el-row>
       </el-header>
       <el-main>
-        <component :is="currentComponent"></component>
+        <component
+          ref="modal"
+          :is="currentComponent"
+        ></component>
       </el-main>
     </el-container>
     <modify-email-modal :show.sync="showEmail">
@@ -48,6 +53,7 @@
 <script>
 import userInfo from '@/components/userInfo.vue'
 import frontPage from '@/views/FrontPage.vue'
+import searchPage from '@/views/SearchPage.vue'
 import airTour from '@/views/AirTour.vue'
 import artificialRainfall from '@/views/ArtificialRainfall.vue'
 import charteredAirplane from '@/views/CharteredAirplane.vue'
@@ -61,6 +67,7 @@ export default {
   components: {
     userInfo,
     frontPage,
+    searchPage,
     airTour,
     artificialRainfall,
     charteredAirplane,
@@ -72,6 +79,7 @@ export default {
   data () {
     return {
       currentComponent: '',
+      searchParam: '',
       showEmail: false,
       showPassword: false,
       loading: false
@@ -98,7 +106,13 @@ export default {
       const path = this.$route.path
       const { type = '' } = this.$route.query
 
-      if ((component === 'frontPage' && type === '') || component === type) {
+      if (component === this.currentComponent) {
+        return
+      }
+
+      this.currentComponent = component
+
+      if (component === 'searchPage' || type === '') {
         return
       }
 
@@ -110,7 +124,22 @@ export default {
           query: { type: component }
         })
       }
-      this.currentComponent = component
+    },
+    doSearch () {
+      const param = this.searchParam
+      const path = this.$route.path
+      const { type = '' } = this.$route.query
+
+      if (this.currentComponent !== 'searchPage') {
+        this.currentComponent = 'searchPage'
+      }
+
+      this.$nextTick(() => {
+        if (type !== '') {
+          this.$router.push(path)
+        }
+        this.$refs.modal.getService(param)
+      })
     }
   }
 }

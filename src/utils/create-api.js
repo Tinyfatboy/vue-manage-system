@@ -57,5 +57,11 @@ export default {
     return axios.get('/user/server/detail', {
       params
     })
+  },
+
+  searchService (params) {
+    return axios.get('/user/get/server/param', {
+      params
+    })
   }
 }

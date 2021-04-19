@@ -5,6 +5,7 @@
   >
     <el-col :span="12">
       <img
+        v-if="detailData.serverImg"
         :src="'http://119.29.20.213:8080/uploadimg/' + detailData.serverImg"
         alt=""
         style="width: 100%;object-fit: contain;"
