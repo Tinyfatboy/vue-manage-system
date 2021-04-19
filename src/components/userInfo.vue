@@ -9,10 +9,6 @@
         type="text"
         @click="goTo('register')"
       > 注册 </el-button>
-      <el-button
-        type="text"
-        @click="goToOrder"
-      > 我的订单 </el-button>
     </div>
     <div v-else>
       <el-dropdown @command="handleCommand">
@@ -30,7 +26,6 @@
           <el-dropdown-item command="logout">退出登录</el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
-      <el-button type="text"> 我的订单 </el-button>
     </div>
   </div>
 </template>
